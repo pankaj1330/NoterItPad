@@ -1,0 +1,30 @@
+
+@font-face {
+    font-family: "Poppins";
+    src: url('./assets/Fonts/Poppins/Poppins-Regular.ttf');
+}
+@font-face {
+    font-family: "Poppins Medium";
+    src: url('./assets/Fonts/Poppins/Poppins-Medium.ttf');
+}
+@font-face {
+    font-family: "Poppins Bold";
+    src: url('./assets/Fonts/Poppins/Poppins-Bold.ttf');
+}
+
+@font-face {
+    font-family: "Noto Serif";
+    src: url('./assets/Fonts/NatoSerif/NotoSerif-VariableFont_wdth\,wght.ttf');
+}
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif !important;
+    /* Noto Serif */
+}
+h1,h2,h3,h4,h5,h6{
+    font-family: "Noto Serif",serif;
+}

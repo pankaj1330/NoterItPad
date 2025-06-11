@@ -1,0 +1,45 @@
+.modalCenter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    .css-4nmryk-MuiBackdrop-root-MuiModal-backdrop{
+        border: 1px solid rgb(206, 206, 206);
+        border-radius: 8px;
+        background-color: transparent !important;
+    }
+    .modalCenterBox {
+        width: 100%;
+        max-width: 450px;
+        height: auto !important;
+        background-color: white !important;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        border: none;
+        outline: none;
+        border-radius: 16px;
+
+        .modalHeader {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            .actionBtns{
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: end;
+                gap: 4px;
+                button{
+                    span{
+                        padding: 0px !important;
+
+                        // width: 3px !important;
+                    }
+                }
+            }
+        }
+    }
+}
