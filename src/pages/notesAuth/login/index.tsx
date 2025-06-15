@@ -6,11 +6,19 @@ import Text from "../../../components/ComponentText"
 import InputText from "../../../components/InputText"
 import { LoginSchema } from "./utils/validation"
 import type { z } from "zod"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { showErrorToast, showSuccessToast } from "../../../utils/showtoast"
+import { useLoginUserMutation } from "../redux/redux"
+import { RouteConstants } from "../../../routes/RouteConstants"
 
 type LoginFormType = z.infer<typeof LoginSchema>
 
 function Login() {
+
+  const [loginUser, {isLoading}] = useLoginUserMutation();
+
+  const navigate = useNavigate();
+
   const formMethod = useForm<LoginFormType>({
     defaultValues : {
       email : "",
@@ -19,8 +27,23 @@ function Login() {
     resolver : zodResolver(LoginSchema)
   })
 
-  const handleSubmit = (data : LoginFormType) => {
-    console.log("data ",data);
+  const handleSubmit = async (data : LoginFormType) => {
+    try{
+      const resp = await loginUser(data);
+      const isSuccess = showSuccessToast(resp);
+      if(!isSuccess){
+        return;
+      }
+      formMethod.reset();
+      const token = resp?.data?.access_token;
+      const name = resp?.data?.username || "";
+      localStorage.setItem('token', token);
+      localStorage.setItem('username',name);
+      navigate(RouteConstants.HomeRoutes.HOME_PAGE);
+    }
+    catch(err){
+      showErrorToast(err);
+    }
     return;    
   }
 
@@ -43,7 +66,7 @@ function Login() {
             label="Password"
           />
 
-          <Button variant="contained" type="submit">Login</Button>
+          <Button variant="contained" type="submit" loading={isLoading}>Login</Button>
           <Stack className="signupFooter">
             <Text 
               text="Don't have an account"

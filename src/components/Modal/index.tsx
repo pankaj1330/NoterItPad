@@ -1,4 +1,4 @@
-import { Box, IconButton, Modal, Paper, Stack } from "@mui/material"
+import { IconButton, Modal, Paper, Stack } from "@mui/material"
 import type { ReactNode } from "react";
 import Text from "../ComponentText";
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -12,8 +12,12 @@ interface ModalCenterProps {
     handleClose: () => void;
     title: string;
     className?: string;
+    onSubmit : () => void;
+    onDelete : () => void;
+    disable : boolean;
+    isEdit: boolean;
 }
-function ModalCenter({ open, handleClose, children, title, className="" }: ModalCenterProps) {
+function ModalCenter({ open, handleClose, children, title, className="",onSubmit, onDelete,disable, isEdit }: ModalCenterProps) {
     return (
         <Modal
             open={open}
@@ -25,13 +29,15 @@ function ModalCenter({ open, handleClose, children, title, className="" }: Modal
                     <Text
                         text={title}
                         variant="h5"
-                        // fontWeight={600}
                     />
                     <Stack className="actionBtns">
-                        <IconButton>
-                            <DeleteIcon color="error" />
-                        </IconButton>
-                        <IconButton>
+                        {
+                            isEdit &&
+                            <IconButton onClick={onDelete} disabled={disable}>
+                                <DeleteIcon color="error" />
+                            </IconButton>
+                        }
+                        <IconButton onClick={onSubmit} disabled={disable}>
                             <DoneIcon color="success"/>
                         </IconButton>
                     </Stack>

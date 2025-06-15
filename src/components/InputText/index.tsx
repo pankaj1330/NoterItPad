@@ -15,11 +15,12 @@ function InputText({ name, placeholder, label }: IntpuTextProps) {
         <Controller
             name={name}
             control={formMethod.control}
-            render={({ field: { onChange }, fieldState: { error } }) => {
+            render={({ field: { onChange,value }, fieldState: { error } }) => {
                 return <TextField
                     error={!!error}
                     name={name}
                     label={label}
+                    value={value}
                     placeholder={placeholder}
                     variant={"outlined"}
                     onChange={(e) => onChange(e.target.value)}
