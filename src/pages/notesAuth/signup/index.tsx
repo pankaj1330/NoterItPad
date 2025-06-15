@@ -7,11 +7,18 @@ import InputText from "../../../components/InputText";
 import FormWrapper from "../../../components/FormWrapper";
 import '../../../style/notesAuth.scss'
 import Text from "../../../components/ComponentText";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSignupUserMutation } from "../redux/redux";
+import { showErrorToast, showSuccessToast } from "../../../utils/showtoast";
+import { RouteConstants } from "../../../routes/RouteConstants";
 
 type signupSchemaType = z.infer<typeof SignupValidation>
 
 function Signup() {
+
+  const [createUser,{isLoading}] = useSignupUserMutation();
+
+  const navigate = useNavigate();
 
   const formMethod = useForm<signupSchemaType>({
     defaultValues : {
@@ -22,8 +29,23 @@ function Signup() {
     resolver : zodResolver(SignupValidation)
   });
 
-  const handleSubmit = (data : signupSchemaType) => {
-    console.log("data ",data);
+  const handleSubmit = async (data : signupSchemaType) => {
+    try{
+      const resp = await createUser({
+          name : data.username,
+          email : data.email,
+          password : data.password
+      })
+
+      const isSuccess = showSuccessToast(resp);
+      if(isSuccess){
+        formMethod.reset();
+        navigate(RouteConstants.LoginRoutes.LOGIN_PAGE)
+      }
+    }
+    catch(err){
+      showErrorToast(err)
+    }
     return;
   }
 
@@ -35,7 +57,7 @@ function Signup() {
           <InputText name="email" label="Email"/>
           <InputText name="password" label="Password"/>
 
-          <Button variant="contained" type="submit">Signup</Button>
+          <Button variant="contained" type="submit" loading={isLoading}>Signup</Button>
 
           <Stack className="signupFooter">
             <Text 

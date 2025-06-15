@@ -1,37 +1,43 @@
-.notes-app{
-    .empty-notes{
+.notes-app {
+    .empty-notes {
         width: 100%;
         height: calc(100vh - 100px);
         display: grid;
         place-content: center;
-        .create-note-btn{
+
+        .create-note-btn {
             // background-color: gray;
             text-transform: capitalize;
         }
     }
-    .notes-list-container{
+
+    .notes-list-container {
         padding: 16px;
-        .notes-list{
+
+        .notes-list {
             margin-top: 4px;
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
             gap: 16px;
-            // justify-content: space-between;
-            .singleNote{
+
+            .singleNote {
                 width: 240px;
                 // border-radius: 16px;
                 padding: 16px;
                 cursor: pointer;
-                .card{
+
+                .card {
                     gap: 8px;
                 }
             }
         }
     }
-    .createNoteButton{
+
+    .createNoteButton {
         padding: 16px;
-        .createNote{
+
+        .createNote {
             margin-top: 4px;
             width: 240px;
             height: 140px;
@@ -40,15 +46,28 @@
             cursor: pointer;
             display: grid;
             place-content: center;
-            svg{
+
+            svg {
                 font-size: 40px;
             }
         }
     }
 
 }
-.editModal{
-    .editNoteModal{
-        // background-color: red !important;
+
+@media only screen and (max-width : 350px) {
+    .notes-app {
+        .notes-list-container {
+            .notes-list {
+                .singleNote {
+                    width: 100% !important;
+                }
+            }
+        }
+        .createNoteButton{
+            .createNote{
+                width: 100% !important;
+            }
+        }
     }
 }
