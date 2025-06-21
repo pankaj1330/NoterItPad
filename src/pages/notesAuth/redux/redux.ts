@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import {API_BASE_URI} from '../../../config'
 import { NotesApi } from '../../Home/redux/redux';
 import type { ThunkDispatch, UnknownAction } from '@reduxjs/toolkit';
+import type { loginApiResponse, signupApiResponse } from './type';
 
 export const resetAllApiCaches = (dispatch :ThunkDispatch<any, any, UnknownAction>) => {
   dispatch(AuthApi.util.resetApiState());
@@ -12,7 +13,7 @@ export const AuthApi = createApi({
   reducerPath: 'AuthApi',
   baseQuery: fetchBaseQuery({ baseUrl: `${API_BASE_URI}/user` }),
   endpoints: (builder) => ({
-    loginUser: builder.mutation<any, any>({
+    loginUser: builder.mutation<loginApiResponse, {email: string, password : string}>({
       query: ({email, password}) => ({
         url : '/login',
         method : 'POST',
@@ -30,7 +31,7 @@ export const AuthApi = createApi({
       },
     }),
 
-    signupUser: builder.mutation<any, any>({
+    signupUser: builder.mutation<signupApiResponse, {name: string, email: string, password : string}>({
       query: ({name, email, password}) => ({
         url : '/signup',
         method : 'POST',
