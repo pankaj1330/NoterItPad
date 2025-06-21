@@ -1,12 +1,13 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { API_BASE_URI } from '../../../config'
+import type { commonApiResponse, NotesApiResponseType, NotesType } from './type';
 
 export const NotesApi = createApi({
     reducerPath: 'NotesApi',
     baseQuery: fetchBaseQuery({ baseUrl: `${API_BASE_URI}/notes` }),
     tagTypes: ['GetNotes'],
     endpoints: (builder) => ({
-        createNote: builder.mutation<any, any>({
+        createNote: builder.mutation<commonApiResponse, {title: string, description:string}>({
             query: ({ title, description }) => ({
                 url: '/create',
                 method: 'POST',
@@ -21,7 +22,7 @@ export const NotesApi = createApi({
             invalidatesTags:['GetNotes']
         }),
 
-        updateNote: builder.mutation<any, any>({
+        updateNote: builder.mutation<commonApiResponse, {title: string, description: string, id:string | number}>({
             query: ({ title, description, id }) => ({
                 url: `/update/${id}`,
                 method: 'PATCH',
@@ -36,7 +37,7 @@ export const NotesApi = createApi({
             invalidatesTags:['GetNotes']
         }),
 
-        deleteNote: builder.mutation<any, any>({
+        deleteNote: builder.mutation<commonApiResponse, {id : string | number}>({
             query: ({ id }) => ({
                 url: `/delete/${id}`,
                 method: 'PATCH',
@@ -47,7 +48,7 @@ export const NotesApi = createApi({
             invalidatesTags:['GetNotes']
         }),
 
-        getNotes: builder.query<any, void>({
+        getNotes: builder.query<{notes : NotesType[]}, void>({
             query: () => ({
                 url: '',
                 method: 'GET',
@@ -56,7 +57,7 @@ export const NotesApi = createApi({
                 }
             }),
             providesTags:['GetNotes'],
-            transformResponse : (response) => response?.data
+            transformResponse : (response : NotesApiResponseType) => response?.data
         }),
 
     }),

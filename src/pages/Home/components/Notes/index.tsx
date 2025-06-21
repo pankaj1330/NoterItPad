@@ -9,6 +9,7 @@ import { useCreateNoteMutation, useDeleteNoteMutation, useGetNotesQuery, useUpda
 import { showErrorToast, showSuccessToast } from "../../../../utils/showtoast";
 import { toast } from "react-toastify";
 import CircularIndeterminate from "../../../../components/CircularProgress";
+import type { NotesType } from "../../redux/type";
 
 function Notes() {
 
@@ -25,7 +26,7 @@ function Notes() {
     isModalOpen,
     closeModal,
     openModal
-  } = useModalState();
+  } = useModalState<string | null>();
 
   const [editNote, setEditNote] = useState({
     title: "",
@@ -34,7 +35,7 @@ function Notes() {
 
   const [isEdit, setIsEdit] = useState<boolean>(false);
 
-  const handleOpenModal = (note) => {
+  const handleOpenModal = (note : NotesType) => {
     setEditNote({
       title : note?.title,
       desc : note?.description
@@ -77,7 +78,7 @@ function Notes() {
     else{
       try{
         const resp = await updateNote({
-          id : modalData,
+          id : modalData || "",
           title: editNote.title,
           description: editNote.desc
         })

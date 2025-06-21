@@ -10,6 +10,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { showErrorToast, showSuccessToast } from "../../../utils/showtoast"
 import { useLoginUserMutation } from "../redux/redux"
 import { RouteConstants } from "../../../routes/RouteConstants"
+import { toast } from "react-toastify"
 
 type LoginFormType = z.infer<typeof LoginSchema>
 
@@ -37,6 +38,10 @@ function Login() {
       formMethod.reset();
       const token = resp?.data?.access_token;
       const name = resp?.data?.username || "";
+      if(!token){
+        toast.error("Something went wrong");
+        return;
+      }
       localStorage.setItem('token', token);
       localStorage.setItem('username',name);
       navigate(RouteConstants.HomeRoutes.HOME_PAGE);
