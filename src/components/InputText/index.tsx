@@ -6,9 +6,10 @@ type IntpuTextProps = {
     name: string;
     label?: string;
     placeholder?: string;
+    type?: string;
 }
 
-function InputText({ name, placeholder, label }: IntpuTextProps) {
+function InputText({ name, placeholder, label, type }: IntpuTextProps) {
     const formMethod = useFormContext()
 
     return (
@@ -26,6 +27,7 @@ function InputText({ name, placeholder, label }: IntpuTextProps) {
                     onChange={(e) => onChange(e.target.value)}
                     helperText={error?.message}
                     className="inputText"
+                    type={type}
                 />
             }}
         />

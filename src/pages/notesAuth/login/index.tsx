@@ -69,6 +69,7 @@ function Login() {
           <InputText 
             name="password"
             label="Password"
+            type="password"
           />
 
           <Button variant="contained" type="submit" loading={isLoading}>Login</Button>
