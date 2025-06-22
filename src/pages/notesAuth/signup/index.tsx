@@ -55,7 +55,7 @@ function Signup() {
           <Text variant="h5" fontWeight={600} align="center" text="Sign Up" />
           <InputText name="username" label="Name"/>
           <InputText name="email" label="Email"/>
-          <InputText name="password" label="Password"/>
+          <InputText name="password" label="Password" type="password"/>
 
           <Button variant="contained" type="submit" loading={isLoading}>Signup</Button>
 
